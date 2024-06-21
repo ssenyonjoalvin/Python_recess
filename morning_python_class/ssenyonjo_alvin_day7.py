@@ -209,7 +209,7 @@ import json
 # writing to a JSON file 
 student_data = {
     'name' : 'ssenyonjo',
-    'corudse': 'BSE'
+    'course': 'BSE'
 }
 
 # open the file 
@@ -228,7 +228,78 @@ with open('student_data.json','r') as json_file:
 # execrise3 : using abstraction caclulate the area and perimeter of the a rectangle
 
 
+import xml.etree.ElementTree as ET
+
+def write_xml(file_name):
+    # Create the root element
+    root = ET.Element("data")
+
+    # Create a child element
+    item1 = ET.SubElement(root, "item")
+    item1.set("name", "item1")
+    item1.text = "This is item 1"
+
+    # Create another child element
+    item2 = ET.SubElement(root, "item")
+    item2.set("name", "item2")
+    item2.text = "This is item 2"
+
+    # Create a tree structure
+    tree = ET.ElementTree(root)
+
+    # Write to the file
+    with open(file_name, "wb") as files:
+        tree.write(files)
+
+def read_xml(file_name):
+    # Parse the XML file
+    tree = ET.parse(file_name)
+    root = tree.getroot()
+
+    # Iterate through the elements and print them
+    for item in root.findall("item"):
+        name = item.get("name")
+        text = item.text
+        print(f"Item name: {name}, text: {text}")
+
+# Write to XML
+write_xml("example.xml")
+
+# Read from XML
+read_xml("example.xml")
 
 
 
+from abc import ABC, abstractmethod
+
+class Shape(ABC):
+    @abstractmethod
+    def calculate_area(self):
+        pass
+
+    @abstractmethod
+    def calculate_perimeter(self):
+        pass
+
+class Rectangle(Shape):
+    def __init__(self, length, width):
+        self.length = length
+        self.width = width
+
+    def calculate_area(self):
+        return self.length * self.width
+
+    def calculate_perimeter(self):
+        return 2 * (self.length + self.width)
+
+# Create an instance of Rectangle
+rect = Rectangle(5, 3)
+
+# Calculate and print area
+area = rect.calculate_area()
+print(f"Area of the rectangle: {area}")
+
+# Calculate and print perimeter
+perimeter = rect.calculate_perimeter()
+print(f"Perimeter of the rectangle: {perimeter}")
 
