@@ -1,0 +1,17 @@
+<form action="{%url 'polls:vote' question.id %}" method="post">
+    <!-- when you create a form that alters data server-side -->
+    {% csrf_token %}
+    <!-- csrf ===  Cross Site Request Forgery token is used to protect  web applications from a specific type of attack  -->
+    <fieldset>
+        <lengend><h1>{{ question.question.text }}</h1></lengend>
+        {% if error_message %} <p><strong>{{ error_message}}</strong></p>
+        {% endif %}
+        {%for choice in question.choice_set.all %}
+        <!-- forloop.counter  indicates the number of times for tag has gone thrugh its loop -->
+        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+        {% endfor %}
+
+    </fieldset>
+    <input type="submit" value="Vote">
+</form>
